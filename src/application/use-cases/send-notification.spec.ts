@@ -5,12 +5,13 @@ describe('SendNotification', () => {
   it('should be able to send a notification', async () => {
     const notificationsRepository = new InMemoryNotificationsRepository()
     const sendNotification = new SendNotification(notificationsRepository)
-    await sendNotification.execute({
+    const { notification } = await sendNotification.execute({
       recipientId: 'example',
       content: 'content',
       category: 'category',
     })
 
     expect(notificationsRepository.notifications).toHaveLength(1)
+    expect(notificationsRepository.notifications[0]).toEqual(notification)
   })
 })
